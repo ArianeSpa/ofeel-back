@@ -1,0 +1,10 @@
+# Composer
+/vendor/
+composer.lock
+
+# Config file
+app/config.conf
+
+# Personnal directories and files
+data_API
+COMPOSER_INSTALL.md

@@ -1,0 +1,19 @@
+{
+    "name": "ofeel/front-end",
+    "authors": [
+        {
+            "name": "ArianeSpanneut",
+            "email": "ariane.spanneut@gmail.com"
+        }
+    ],
+    "require": {
+        "altorouter/altorouter": "^1.2",
+        "benoclock/alto-dispatcher": "^1.0"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^4.3"
+    },
+    "autoload": {
+        "psr-4": {"ofeel\\": "app/"}
+    }
+}
