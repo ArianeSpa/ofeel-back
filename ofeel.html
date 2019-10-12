@@ -1,0 +1,91 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<style>
+  #mld .relation { font-variant: small-caps; font-weight: bold }
+  #mld .primary { text-decoration: underline }
+  #mld .foreign { font-style: oblique }
+  #mld .normal { }
+</style>
+</head>
+<body>
+<div id='mld'>
+<div>
+  <span class='relation'>GOAL</span> (
+    <span class='primary'>goal_type</span>,
+    <span class='normal'>carbohydrate_proportion</span>,
+    <span class='normal'>protein_proportion</span>,
+    <span class='normal'>fat_proportion</span>,
+    <span class='normal'>created_at</span>,
+    <span class='normal'>updated_at</span>
+  )
+</div>
+<div>
+  <span class='relation'>CHOOSE</span> (
+    <span class='foreign primary'>username</span>,
+    <span class='foreign primary'>diet_type</span>
+  )
+</div>
+<div>
+  <span class='relation'>DIET</span> (
+    <span class='primary'>diet_type</span>,
+    <span class='normal'>created_at</span>,
+    <span class='normal'>updated_at</span>
+  )
+</div>
+<div>
+  <span class='relation'>USER</span> (
+    <span class='primary'>username</span>,
+    <span class='normal'>email</span>,
+    <span class='normal'>password</span>,
+    <span class='normal'>age</span>,
+    <span class='normal'>weight</span>,
+    <span class='normal'>height</span>,
+    <span class='normal'>gender</span>,
+    <span class='normal'>basal_metabolic_rate</span>,
+    <span class='normal'>energy_expenditure</span>,
+    <span class='normal'>daily_calories</span>,
+    <span class='normal'>breakfast_dinner_calories</span>,
+    <span class='normal'>lunch_calories</span>,
+    <span class='normal'>breakfast_dinner_carbo_quantity</span>,
+    <span class='normal'>lunch_carbo_quantity</span>,
+    <span class='normal'>breakfatst_dinner_prot_quantity</span>,
+    <span class='normal'>lunch_prot_quantity</span>,
+    <span class='normal'>breakfast_dinner_fat_quantity</span>,
+    <span class='normal'>lunch_fato_quantity</span>,
+    <span class='normal'>token</span>,
+    <span class='normal'>created_at</span>,
+    <span class='normal'>updated_at</span>,
+    <span class='foreign'>level_activity</span>,
+    <span class='foreign'>goal_type</span>
+  )
+</div>
+<div>
+  <span class='relation'>MATCH</span> (
+    <span class='foreign primary'>food_name</span>,
+    <span class='foreign primary'>diet_type</span>
+  )
+</div>
+<div>
+  <span class='relation'>ACTIVITY</span> (
+    <span class='primary'>level_activity</span>,
+    <span class='normal'>factor_activity</span>,
+    <span class='normal'>created_at</span>,
+    <span class='normal'>updated_at</span>
+  )
+</div>
+<div>
+  <span class='relation'>FOOD</span> (
+    <span class='primary'>food_name</span>,
+    <span class='normal'>food_energy</span>,
+    <span class='normal'>food_fat</span>,
+    <span class='normal'>food_carbo</span>,
+    <span class='normal'>food_prot</span>,
+    <span class='normal'>food_category</span>,
+    <span class='normal'>created_at</span>,
+    <span class='normal'>updated_at</span>
+  )
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+FOOD : food_name, food_energy, food_fat, food_carbo, food_prot, food_category, created_at, updated_at
+HAS, 11 USER, 0N ACTIVITY
+ACTIVITY: level_activity, factor_activity, created_at, updated_at
+
+MATCH, 0N FOOD, 0N DIET
+USER: username, email, password, age, weight, height, gender, basal_metabolic_rate, energy_expenditure, daily_calories, breakfast_dinner_calories, lunch_calories, breakfast_dinner_carbo_quantity, lunch_carbo_quantity, breakfatst_dinner_prot_quantity, lunch_prot_quantity, breakfast_dinner_fat_quantity, lunch_fato_quantity, token, created_at, updated_at
+DETERMINE, 11 USER, 0N GOAL
+
+DIET: diet_type, created_at, updated_at
+CHOOSE, 0N USER, 0N DIET
+GOAL: goal_type, carbohydrate_proportion, protein_proportion, fat_proportion, created_at, updated_at
