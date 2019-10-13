@@ -4,9 +4,9 @@
 // FRONT CONTROLLER
 ///////////////////
 
-namespace ofeel;
-use Altorouter;
-use Dispatcher;
+// namespace ofeel;
+// use Altorouter;
+// use Dispatcher;
 
 
 class Application

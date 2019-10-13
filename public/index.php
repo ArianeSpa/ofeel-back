@@ -10,9 +10,9 @@
 /////////////////
 
 //
-// Controllers
+// Utils
 //
-require __DIR__.'/../app/Controllers/CoreController.php';
+require __DIR__.'/../app/Utils/Database.php';
 
 //
 // Models
@@ -20,16 +20,19 @@ require __DIR__.'/../app/Controllers/CoreController.php';
 require __DIR__.'/../app/Models/CoreModel.php';
 
 //
-// Utils
+// Controllers
 //
-require __DIR__.'/../app/Utils/Database.php';
+require __DIR__.'/../app/Controllers/CoreController.php';
+require __DIR__.'/../app/Controllers/MainController.php';
 
 //
 // Front Controller
 //
 require __DIR__.'/../app/Application.php';
 
-// Mis à dispo par altorouter
+//
+// Mis à dispo par altorouter pour les deps gérées par Composer
+//
 require __DIR__.'/../vendor/autoload.php';
 
 
