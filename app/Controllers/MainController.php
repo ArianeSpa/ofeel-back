@@ -5,6 +5,7 @@ namespace oFeel\Controllers;
 use oFeel\Models\FoodModel;
 use oFeel\Models\DietModel;
 use oFeel\Models\GoalModel;
+use oFeel\Models\ActivityModel;
 
 
 // Classe qui ne sera jamais instanciée, uniquement héritée (abstract)
@@ -23,9 +24,14 @@ class MainController extends CoreController
         // dump($myDietList);
 
         // essai de récup des goal datas ok
-        $newGoalModel = new GoalModel;
-        $myGoalList = $newGoalModel->findGoal();
-        dump($myGoalList);
+        // $newGoalModel = new GoalModel;
+        // $myGoalList = $newGoalModel->findGoal();
+        // dump($myGoalList);
+
+        // essai de récup des activity datas ok
+        $newActivityModel = new ActivityModel;
+        $myActivityList = $newActivityModel->findActivity();
+        dump($myActivityList);
         
         $this->show('home');
     }
