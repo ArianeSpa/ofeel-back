@@ -35,23 +35,29 @@ class Application
         // Array si match, sinon false
         $match = $this->router->match();
 
-        // Défaut : no match
-        $controllerName = 'ErrorController';
-        $methodName = 'error404';
-        $urlParams = [];
+        
+        // instanciation du dispatcher, param (match, pasmatch=controller::methode)
+        $dispatcher = new Dispatcher($match, 'ErrorController::error404');
 
-        // Match
-        if ($match !==false) {
-            $controllerName = $match['target']['controller'];
-            $methodName = $match['target']['method'];
-            $urlParams = $match['params'];
-        }
+        $dispatcher->dispatch();
 
-        // Instanciation nouveau controller
-        $myController = new $controllerName($this->router);
+        // // Défaut : no match
+        // $controllerName = 'ErrorController';
+        // $methodName = 'error404';
+        // $urlParams = [];
 
-        // Exécution
-        $myController->$methodName($urlParams);
+        // // Match
+        // if ($match !==false) {
+        //     $controllerName = $match['target']['controller'];
+        //     $methodName = $match['target']['method'];
+        //     $urlParams = $match['params'];
+        // }
+
+        // // Instanciation nouveau controller
+        // $myController = new $controllerName($this->router);
+
+        // // Exécution
+        // $myController->$methodName($urlParams);
     }
 
     // Méthode listant les routes existantes

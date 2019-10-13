@@ -3,10 +3,10 @@
 // namespace ofeel\Controllers;
 
 // Classe qui ne sera jamais instanciée, uniquement héritée (abstract)
-class MainController
+class MainController extends CoreController
 {
     public function home()
     {
-        //TODO
+        $this->show('home');
     }
 }
