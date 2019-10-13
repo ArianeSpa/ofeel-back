@@ -1,6 +1,6 @@
 <?php
 
-// namespace ofeel\Utils;
+namespace oFeel\Utils;
 
 use PDO;
 

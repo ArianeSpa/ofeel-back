@@ -1,6 +1,6 @@
 <?php
 
-// namespace ofeel\Controllers;
+namespace oFeel\Controllers;
 
 // Classe qui ne sera jamais instanciée, uniquement héritée (abstract)
 abstract class CoreController
