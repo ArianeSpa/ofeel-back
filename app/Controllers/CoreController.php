@@ -5,21 +5,23 @@
 // Classe qui ne sera jamais instanciée, uniquement héritée (abstract)
 abstract class CoreController
 {
-    protected $router;
+    // protected $router;
 
-    // Transmission d'altorouter à chaque controller instancié
-    public function __construct($router)
-    {
-        $this->router = $router;
-    }
+    // // Transmission d'altorouter à chaque controller instancié
+    // public function __construct($router)
+    // {
+    //     $this->router = $router;
+    // }
    
 
     protected function show($viewName)
     {
-        // code ...
+        header('Content-Type: text/html');
 
         // inclusion vues
-        include __DIR__.'../views/'.$viewName.'.tpl.php';
+        include __DIR__.'/../views/header.tpl.php';
+        include __DIR__.'/../views/'.$viewName.'.tpl.php';
+        include __DIR__.'/../views/footer.tpl.php';
     }
 
     protected function error404()
@@ -36,7 +38,7 @@ abstract class CoreController
         // TODO générer $url avec altorouter
 
         header('Location: '.$url);
-        exit;
+        die();
     }
     
     // Méthode qui encode en Json

@@ -23,6 +23,7 @@ require __DIR__.'/../app/Models/CoreModel.php';
 // Controllers
 //
 require __DIR__.'/../app/Controllers/CoreController.php';
+require __DIR__.'/../app/Controllers/ErrorController.php';
 require __DIR__.'/../app/Controllers/MainController.php';
 
 //
@@ -46,5 +47,5 @@ $app = new Application();
 $app->run();
 
 
-echo 'je suis le front controller';
+// echo 'je suis le point d'entrée;
 
