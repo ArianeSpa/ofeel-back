@@ -56,6 +56,8 @@ class FoodModel extends CoreModel
                     food.food_fat,
                     food.food_prot,
                     food.food_category,
+                    food.created_at,
+                    food.updated_at,
                     GROUP_CONCAT(`diet_type` SEPARATOR ", ") AS diet
                 FROM food
                 LEFT JOIN food_match_diet
