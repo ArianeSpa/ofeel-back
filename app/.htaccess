@@ -1,0 +1,2 @@
+# rend le dossier app inaccessible aux internautes
+Deny from all
