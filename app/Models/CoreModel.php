@@ -1,6 +1,6 @@
 <?php
 
-// namespace ofeel\Models;
+namespace oFeel\Models;
 
 // Classe qui ne sera jamais instanciée, uniquement héritée (abstract)
 abstract class CoreModel {

@@ -4,9 +4,9 @@
 // FRONT CONTROLLER
 ///////////////////
 
-// namespace ofeel;
-// use Altorouter;
-// use Dispatcher;
+namespace oFeel;
+use Altorouter;
+use Dispatcher;
 
 
 class Application
@@ -16,7 +16,7 @@ class Application
     public function __construct()
     {
         // Lancement d'altorouter
-        $this->router = new AltoRouter();
+        $this->router = new \AltoRouter();
 
         // Définition de l'url de base
         // "/OFEEL/ofeel-back/public"
@@ -37,27 +37,9 @@ class Application
 
         
         // instanciation du dispatcher, param (match, pasmatch=controller::methode)
-        $dispatcher = new Dispatcher($match, 'ErrorController::error404');
+        $dispatcher = new \Dispatcher($match, 'oFeel\Controllers\ErrorController::error404');
 
         $dispatcher->dispatch();
-
-        // // Défaut : no match
-        // $controllerName = 'ErrorController';
-        // $methodName = 'error404';
-        // $urlParams = [];
-
-        // // Match
-        // if ($match !==false) {
-        //     $controllerName = $match['target']['controller'];
-        //     $methodName = $match['target']['method'];
-        //     $urlParams = $match['params'];
-        // }
-
-        // // Instanciation nouveau controller
-        // $myController = new $controllerName($this->router);
-
-        // // Exécution
-        // $myController->$methodName($urlParams);
     }
 
     // Méthode listant les routes existantes
@@ -67,7 +49,7 @@ class Application
         $this->router->map(
             'GET',
              '/',
-             ['controller' => 'MainController', 'method' => 'home'],
+             ['controller' => 'oFeel\Controllers\MainController', 'method' => 'home'],
              'main_home'
         );
     }
