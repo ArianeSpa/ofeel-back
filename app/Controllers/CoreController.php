@@ -16,7 +16,7 @@ abstract class CoreController
 
     protected function show($viewName)
     {
-        header('Content-Type: text/html');
+        // header('Content-Type: text/html');
 
         // inclusion vues
         include __DIR__.'/../views/header.tpl.php';

@@ -1,10 +1,20 @@
 -- Afficher tous les aliments sans gluten
-SELECT *, diet.id as 'diet_id'
+SELECT 
+    food.id,
+    food.food_name,
+    food.food_energy,
+    food.food_carbo,
+    food.food_fat,
+    food.food_prot,
+    food.food_category,
+    GROUP_CONCAT(`diet_type` SEPARATOR ", ") AS diet
 FROM food
 LEFT JOIN food_match_diet
 ON food.id = food_match_diet.food_id
 LEFT JOIN diet
 ON food_match_diet.diet_id = diet.id
+GROUP BY food.id
+
 WHERE
 diet_id = '1';
 
@@ -17,16 +27,6 @@ LEFT JOIN diet
 ON food_match_diet.diet_id = diet.id
 WHERE
 diet_id = '2';
-
--- Afficher tous les aliments vegan
-SELECT *, diet.id as 'diet_id'
-FROM food
-LEFT JOIN food_match_diet
-ON food.id = food_match_diet.food_id
-LEFT JOIN diet
-ON food_match_diet.diet_id = diet.id
-WHERE
-diet_id = '3';
 
 -- -- Afficher les régimes alimentaires de l'utilisateur
 -- -- Affiche autant de lignes par utilisateur qu'il ne possède de diet
