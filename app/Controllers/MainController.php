@@ -13,32 +13,33 @@ use oFeel\Models\UserModel;
 class MainController extends CoreController
 {
     public function home()
-    {
-        // essai de récup des food datas ok
-        // $newFoodModel = new FoodModel;
-        // $myFoodList = $newFoodModel->findFood();
-        // dump($myFoodList);
-
-        // essai de récup des diet datas ok
-        // $newDietModel = new DietModel;
-        // $myDietList = $newDietModel->findDiet();
-        // dump($myDietList);
-
-        // essai de récup des goal datas ok
-        // $newGoalModel = new GoalModel;
-        // $myGoalList = $newGoalModel->findGoal();
-        // dump($myGoalList);
-
-        // essai de récup des activity datas ok
-        // $newActivityModel = new ActivityModel;
-        // $myActivityList = $newActivityModel->findActivity();
-        // dump($myActivityList);
-
-        // essai de récup des users datas ok
-        // $newUserModel = new UserModel;
-        // $myUserList = $newUserModel->findUser();
-        // dump($myUserList);
-        
+    {        
         $this->show('home');
+    }
+
+    public function test()
+    {
+        // $newUserModel = new UserModel;
+        // dump($newUserModel->findUser('1'));
+
+        // $userModel = new UserModel();
+        // dump($userModel);
+        // // Je remplace ma coquille vide par une coquille pleinne !
+        // $userModel = $userModel->findUser('2');
+        // dump($userModel);
+        // // Je change le goal
+        // $userModel->setGoalId('2');
+        // dump($userModel);
+        // $userModel->updateGoal();
+
+        $goalModel = new FoodModel();
+        $todump = $goalModel->findFood();
+        dump($todump);
+
+        // $foodmod = new FoodModel();
+        // $dump2 = $foodmod->findFood();
+        // dump($dump2);
+        // dump(GoalModel::TABLE_NAME);
+        // dump($goalModel::TABLE_NAME);
     }
 }

@@ -9,6 +9,7 @@ class FoodModel extends CoreModel
 {
     // On pourrait mettre private si on ne prévoit pas d'instancier la classe FoodModel
     // N'étant pas sûr de l'évolution du projet, on opte pour protected
+    const TABLE_NAME = 'food';
 
     protected $food_name;
     protected $food_energy;
@@ -50,16 +51,14 @@ class FoodModel extends CoreModel
     {
         $sql = 'SELECT 
                     food.id,
-                    food.food_name,
-                    food.food_energy,
-                    food.food_carbo,
-                    food.food_fat,
-                    food.food_prot,
-                    food.food_category,
-                    food.created_at,
-                    food.updated_at,
+                    food_name,
+                    food_energy,
+                    food_carbo,
+                    food_fat,
+                    food_prot,
+                    food_category,
                     GROUP_CONCAT(`diet_type` SEPARATOR ", ") AS diet
-                FROM food
+                FROM '.self::TABLE_NAME.'
                 LEFT JOIN food_match_diet
                 ON food.id = food_match_diet.food_id
                 LEFT JOIN diet
