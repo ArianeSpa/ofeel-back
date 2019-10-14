@@ -10,10 +10,15 @@ abstract class CoreModel {
     protected $created_at;
     protected $updated_at;
 
-    //Getters
+    //Getters & setters
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setId($value)
+    {
+        $this->id = $value;
     }
 
     public function getCreatedAt()

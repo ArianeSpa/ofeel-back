@@ -9,11 +9,12 @@ class DietModel extends CoreModel
 {
     protected $diet_type;
 
-    public function getDietType(){
+    public function getDietType()
+    {
         return $this->diet_type;
     }
 
-    public function findDiet()
+    public function findAll()
     {
         $sql = 'SELECT *
                 FROM diet';
@@ -23,6 +24,29 @@ class DietModel extends CoreModel
         $pdoStatement = $pdo->query($sql);
         $pdoStatement->setFetchMode(PDO::FETCH_CLASS, static::class);
         $dietCollection = $pdoStatement->fetchAll();
+
+        return $dietCollection;
+    }
+
+    public function findDiet($id)
+    {
+        $sql = 'SELECT *
+                FROM diet
+                WHERE id IN (:id)';
+        
+        $pdo = Database::getPDO();
+
+        $pdoStatement = $pdo->prepare($sql);
+
+        $pdoStatement->bindValue(
+            ':id',
+            $id,
+            PDO::PARAM_INT
+        );
+        $pdoStatement->execute();
+
+        $pdoStatement->setFetchMode(PDO::FETCH_CLASS, 'oFeel\\Models\\DietModel');
+        $dietCollection = $pdoStatement->fetch();
 
         return $dietCollection;
     }

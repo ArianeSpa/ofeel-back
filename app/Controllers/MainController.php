@@ -21,7 +21,12 @@ class MainController extends CoreController
 
         // essai de récup des diet datas ok
         // $newDietModel = new DietModel;
-        // $myDietList = $newDietModel->findDiet();
+        // $listId=['1', '2'];
+        // $myDietList = [];
+        // foreach ($listId as $key => $value) {
+        //     dump($value);
+        //     $myDietList [] = [$newDietModel->findDiet($value)];
+        // };
         // dump($myDietList);
 
         // essai de récup des goal datas ok
@@ -36,8 +41,28 @@ class MainController extends CoreController
 
         // essai de récup des users datas ok
         // $newUserModel = new UserModel;
-        // $myUserList = $newUserModel->findUser();
-        // dump($myUserList);
+        // $newUserModel->setUsername('toto3');
+        // $newUserModel->setPassword('totofou3');
+        // $newUserModel->setEmail('toto3@totofou.tofu');
+        // $myUserTest = $newUserModel->insert();
+        // dump($myUserTest);
+
+        $newUserModel = new UserModel;
+        $newUserModel->setUsername('user4');
+        $newUserModel->setPassword('user4');
+        $newUserModel->setEmail('user4@totofou.tofu');
+        $userInsert = $newUserModel->insert();
+        dump($userInsert);
+        $newUserModel->setId('10');
+        $newUserModel->setGoalId('2');
+        $userUpdate = $newUserModel->updateGoalAndDiet();
+        dump($userUpdate);
+
+        
+        // $newUserModel->setId('8');
+        // $myUserTest = $newUserModel->delete();
+        // dump($myUserTest);
+
         
         $this->show('home');
     }
