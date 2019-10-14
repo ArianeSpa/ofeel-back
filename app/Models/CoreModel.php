@@ -4,9 +4,10 @@ namespace oFeel\Models;
 
 use oFeel\Utils\Database;
 use PDO;
+use JsonSerializable;
 
 // Classe qui ne sera jamais instanciée, uniquement héritée (abstract)
-abstract class CoreModel {
+abstract class CoreModel implements JsonSerializable {
 
     //Propriétés communes à tous les models
     protected $id;

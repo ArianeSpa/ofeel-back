@@ -54,6 +54,27 @@ class Application
         );
         $this->router->map(
             'GET',
+             '/diets',
+             ['controller' => 'oFeel\Controllers\DietController', 'method' => 'all'],
+             'diets_all'
+        );
+
+        $this->router->map(
+            'GET',
+             '/goals',
+             ['controller' => 'oFeel\Controllers\GoalController', 'method' => 'all'],
+             'goals_all'
+        );
+
+        $this->router->map(
+            'GET',
+             '/food',
+             ['controller' => 'oFeel\Controllers\FoodController', 'method' => 'all'],
+             'food_all'
+        );
+
+        $this->router->map(
+            'GET',
              '/test',
              ['controller' => 'oFeel\Controllers\MainController', 'method' => 'test'],
              'test'

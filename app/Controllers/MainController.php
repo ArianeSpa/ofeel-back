@@ -19,27 +19,6 @@ class MainController extends CoreController
 
     public function test()
     {
-        // $newUserModel = new UserModel;
-        // dump($newUserModel->findUser('1'));
-
-        // $userModel = new UserModel();
-        // dump($userModel);
-        // // Je remplace ma coquille vide par une coquille pleinne !
-        // $userModel = $userModel->findUser('2');
-        // dump($userModel);
-        // // Je change le goal
-        // $userModel->setGoalId('2');
-        // dump($userModel);
-        // $userModel->updateGoal();
-
-        $goalModel = new FoodModel();
-        $todump = $goalModel->findFood();
-        dump($todump);
-
-        // $foodmod = new FoodModel();
-        // $dump2 = $foodmod->findFood();
-        // dump($dump2);
-        // dump(GoalModel::TABLE_NAME);
-        // dump($goalModel::TABLE_NAME);
+        //
     }
 }
