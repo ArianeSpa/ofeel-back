@@ -52,5 +52,11 @@ class Application
              ['controller' => 'oFeel\Controllers\MainController', 'method' => 'home'],
              'main_home'
         );
+        $this->router->map(
+            'GET',
+             '/test',
+             ['controller' => 'oFeel\Controllers\MainController', 'method' => 'test'],
+             'test'
+        );
     }
 }

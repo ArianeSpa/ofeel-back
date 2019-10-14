@@ -228,10 +228,7 @@ class UserModel extends CoreModel
         $this->goal_id = $value;
     }
 
-
-    //Getters TODO
-
-    public function findUser()
+    public function findUser($id)
     {
         $sql = 'SELECT
                     user.id,
@@ -265,15 +262,22 @@ class UserModel extends CoreModel
                 ON user.goal_id = goal.id
                 LEFT JOIN activity
                 ON user.activity_id = activity.id
-                GROUP BY user.id';
+                WHERE user.id = :user_id_to_find
+                GROUP BY user.id'; 
         
         $pdo = Database::getPDO();
+        $pdoStatement = $pdo->prepare($sql);
 
-        $pdoStatement = $pdo->query($sql);
-        $pdoStatement->setFetchMode(PDO::FETCH_CLASS, static::class);
-        $userCollection = $pdoStatement->fetchAll();
+        $pdoStatement->bindValue(
+            ':user_id_to_find',
+            $id,
+            PDO::PARAM_INT
+        );
 
-        return $userCollection;
+        $pdoStatement->execute();
+        $pdoStatement->setFetchMode(PDO::FETCH_CLASS, 'oFeel\\Models\\UserModel');
+
+        return $pdoStatement->fetch();
     }
 
     public function insert()
@@ -311,7 +315,7 @@ class UserModel extends CoreModel
 
     }
 
-    public function updateGoalAndDiet()
+    public function updateGoal()
     {
         $sql = 'UPDATE `user`
                 SET `goal_id` = :new_goal,

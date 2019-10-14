@@ -2,6 +2,9 @@
 
 namespace oFeel\Models;
 
+use oFeel\Utils\Database;
+use PDO;
+
 // Classe qui ne sera jamais instanciée, uniquement héritée (abstract)
 abstract class CoreModel {
 
@@ -29,5 +32,41 @@ abstract class CoreModel {
     public function getUpdatedAt()
     {
         return $this->updated_at;
+    }
+
+    public function find($id)
+    {
+        $sql = 'SELECT *
+                FROM '.static::TABLE_NAME.'
+                WHERE id = :id';
+        
+        $pdo = Database::getPDO();
+
+        $pdoStatement = $pdo->prepare($sql);
+
+        $pdoStatement->bindValue(
+            ':id',
+            $id,
+            PDO::PARAM_INT
+        );
+
+        $pdoStatement->execute();
+
+        $pdoStatement->setFetchMode(PDO::FETCH_CLASS, static::class);
+
+        return $pdoStatement->fetch();
+    }
+
+    public function findAll()
+    {
+        $sql = 'SELECT *
+                FROM '.static::TABLE_NAME;
+        
+        $pdo = Database::getPDO();
+
+        $pdoStatement = $pdo->query($sql);
+
+        $pdoStatement->setFetchMode(PDO::FETCH_CLASS, static::class);
+        return $pdoStatement->fetchAll();
     }
 }
