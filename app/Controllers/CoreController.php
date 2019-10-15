@@ -5,15 +5,6 @@ namespace oFeel\Controllers;
 // Classe qui ne sera jamais instanciée, uniquement héritée (abstract)
 abstract class CoreController
 {
-    // protected $router;
-
-    // // Transmission d'altorouter à chaque controller instancié
-    // public function __construct($router)
-    // {
-    //     $this->router = $router;
-    // }
-   
-
     protected function show($viewName)
     {
         // header('Content-Type: text/html');

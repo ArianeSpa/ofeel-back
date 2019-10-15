@@ -17,6 +17,9 @@ class FoodModel extends CoreModel
     protected $food_fat;
     protected $food_prot;
     protected $food_category;
+    protected $food_diet;
+    protected $diet;
+
 
     public function getFoodName(){
         return $this->food_name;
@@ -47,6 +50,16 @@ class FoodModel extends CoreModel
         return $this->food_category;
     }
 
+    public function getFoodDiet()
+    {
+        return $this->food_diet;
+    }
+
+    public function setFoodDiet($value)
+    {
+        $this->food_diet = $value;
+    }
+
     public function findFood()
     {
         $sql = 'SELECT 
@@ -72,5 +85,19 @@ class FoodModel extends CoreModel
         $foodCollection = $pdoStatement->fetchAll();
 
         return $foodCollection;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'diet' => $this->diet,
+            'name' => $this->food_name,
+            'energy' => $this->food_energy,
+            'carbo' => $this->food_carbo,
+            'fat' => $this->food_fat,
+            'prot' => $this->food_prot,
+            'category' => $this->food_category,
+        ];
     }
 }

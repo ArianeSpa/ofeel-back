@@ -2,9 +2,6 @@
 
 namespace oFeel\Models;
 
-use oFeel\Utils\Database;
-use PDO;
-
 class GoalModel extends CoreModel
 {
     const TABLE_NAME = 'goal';
@@ -32,5 +29,16 @@ class GoalModel extends CoreModel
     public function getFatProp()
     {
         return $this->fat_proportion;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'goal_type' => $this->goal_type,
+            'carbohydrate_proportion' => $this->carbohydrate_proportion,
+            'protein_proportion' => $this->protein_proportion,
+            'fat_proportion' => $this->fat_proportion,
+        ];
     }
 }

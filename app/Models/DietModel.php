@@ -2,9 +2,6 @@
 
 namespace oFeel\Models;
 
-use oFeel\Utils\Database;
-use PDO;
-
 class DietModel extends CoreModel
 {
     const TABLE_NAME = 'diet';
@@ -14,6 +11,14 @@ class DietModel extends CoreModel
     public function getDietType()
     {
         return $this->diet_type;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'diet_type' => $this->diet_type,
+        ];
     }
 
 }
