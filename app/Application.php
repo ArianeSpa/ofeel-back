@@ -81,10 +81,10 @@ class Application
         );
 
         $this->router->map(
-            'GET',
-             '/test',
-             ['controller' => 'oFeel\Controllers\MainController', 'method' => 'test'],
-             'test'
+            'POST',
+             '/user/create',
+             ['controller' => 'oFeel\Controllers\UserController', 'method' => 'create'],
+             'create_user'
         );
     }
 }

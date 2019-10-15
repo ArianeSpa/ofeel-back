@@ -27,6 +27,11 @@ class UserModel extends CoreModel
     protected $lunch_fat_quantity;
     protected $activity_id;
     protected $goal_id;
+    protected $diet;
+    protected $activity;
+    protected $goal;
+
+
 
     //Getters and setters TODO
     public function getUsername()
@@ -296,7 +301,7 @@ class UserModel extends CoreModel
         );
         $pdoStatement->bindValue(
             ':email',
-            $this->email,
+            $this->username,
             PDO::PARAM_STR
         );
         $pdoStatement->bindValue(
@@ -365,4 +370,31 @@ class UserModel extends CoreModel
             return false;
         }
     }
+    
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'username' => $this->username,
+            'age' => $this->age,
+            'weight' => $this->weight,
+            'height' => $this->height,
+            'gender' => $this->gender,
+            'basal_metabolic_rate' => $this->basal_metabolic_rate,
+            'energy_expenditure' => $this->energy_expenditure,
+            'daily_calories' => $this->daily_calories,
+            'breakfast_dinner_calories' => $this->breakfast_dinner_calories,
+            'lunch_calories' => $this->lunch_calories,
+            'breakfast_dinner_carbo_quantity' => $this->breakfast_dinner_carbo_quantity,
+            'lunch_carbo_quantity' => $this->lunch_carbo_quantity,
+            'breakfast_dinner_prot_quantity' => $this->breakfast_dinner_prot_quantity,
+            'lunch_prot_quantity' => $this->lunch_prot_quantity,
+            'breakfast_dinner_fat_quantity' => $this->breakfast_dinner_fat_quantity,
+            'lunch_fat_quantity' => $this->lunch_fat_quantity,
+            // 'activity' => $this->activity,
+            // 'diet' => $this->diet,
+            // 'goal' => $this->goal,
+        ];
+    }
+
 }
