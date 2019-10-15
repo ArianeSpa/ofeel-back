@@ -75,6 +75,13 @@ class Application
 
         $this->router->map(
             'GET',
+             '/activity',
+             ['controller' => 'oFeel\Controllers\ActivityController', 'method' => 'all'],
+             'activity_all'
+        );
+
+        $this->router->map(
+            'GET',
              '/test',
              ['controller' => 'oFeel\Controllers\MainController', 'method' => 'test'],
              'test'

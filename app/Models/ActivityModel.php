@@ -5,8 +5,10 @@ namespace oFeel\Models;
 use oFeel\Utils\Database;
 use PDO;
 
-class ActivityModel
+class ActivityModel extends CoreModel
 {
+    const TABLE_NAME = 'activity';
+
     protected $activity_type;
     protected $factor;
 
@@ -20,17 +22,12 @@ class ActivityModel
         return $this->factor;
     }
 
-    public function findActivity()
+    public function jsonSerialize()
     {
-        $sql = 'SELECT *
-                FROM activity';
-        
-        $pdo = Database::getPDO();
-
-        $pdoStatement = $pdo->query($sql);
-        $pdoStatement->setFetchMode(PDO::FETCH_CLASS, static::class);
-        $activityCollection = $pdoStatement->fetchAll();
-
-        return $activityCollection;
+        return [
+            'id' => $this->id,
+            'activity' => $this->activity_type,
+            'factor' => $this->factor,
+        ];
     }
 }
