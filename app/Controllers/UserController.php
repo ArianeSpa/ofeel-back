@@ -9,9 +9,11 @@ class UserController extends CoreController
     {
         $username = $_POST['username'];
         $password = $_POST['password'];
-        dump($username . ' ' . $password);
+        $email = $_POST['email'];
+        dump($username . ' ' . $password . ' ' . $email);
         $newUser = new UserModel;
         $newUser->setUsername($username);
+        $newUser->setEmail($email);
         $newUser->setPassword($password);
         $test = $newUser->insert();
         dump($test);

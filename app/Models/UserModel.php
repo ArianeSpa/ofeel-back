@@ -301,7 +301,7 @@ class UserModel extends CoreModel
         );
         $pdoStatement->bindValue(
             ':email',
-            $this->username,
+            $this->email,
             PDO::PARAM_STR
         );
         $pdoStatement->bindValue(
