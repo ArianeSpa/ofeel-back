@@ -12,4 +12,3 @@ class ActivityController extends CoreController
         $this->showJson($activityCollection);
     }
 } 
-//test
