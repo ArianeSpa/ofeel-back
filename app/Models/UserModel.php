@@ -19,8 +19,8 @@ class UserModel extends CoreModel
     protected $daily_calories;
     protected $breakfast_dinner_calories;
     protected $lunch_calories;
-    protected $breakfast_dinner_carbo_quantity;
-    protected $lunch_carbo_quantity;
+    protected $breakfast_dinner_carb_quantity;
+    protected $lunch_carb_quantity;
     protected $breakfast_dinner_prot_quantity;
     protected $lunch_prot_quantity;
     protected $breakfast_dinner_fat_quantity;
@@ -29,7 +29,11 @@ class UserModel extends CoreModel
     protected $goal_id;
     protected $diet;
     protected $activity;
+    protected $factor_activity;
     protected $goal;
+    protected $carb_proportion;
+    protected $fat_proportion;
+    protected $prot_proportion;
 
 
 
@@ -153,24 +157,24 @@ class UserModel extends CoreModel
         $this->lunch_calories = $value;
     }
 
-    public function getBreakfastDinnerCarboQty()
+    public function getBreakfastDinnercarbQty()
     {
-        return $this->breakfast_dinner_carbo_quantity;
+        return $this->breakfast_dinner_carb_quantity;
     }
 
-    public function setBreakfastDinnerCarboQty($value)
+    public function setBreakfastDinnercarbQty($value)
     {
-        $this->breakfast_dinner_carbo_quantity = $value;
+        $this->breakfast_dinner_carb_quantity = $value;
     }
 
-    public function getLunchCarboQty()
+    public function getLunchcarbQty()
     {
-        return $this->lunch_carbo_quantity;
+        return $this->lunch_carb_quantity;
     }
 
-    public function setLunchCarboQty($value)
+    public function setLunchcarbQty($value)
     {
-        $this->lunch_carbo_quantity = $value;
+        $this->lunch_carb_quantity = $value;
     }
 
     public function getBreakfastDinnerProtQty()
@@ -233,58 +237,6 @@ class UserModel extends CoreModel
         $this->goal_id = $value;
     }
 
-    public function findUser($id)
-    {
-        $sql = 'SELECT
-                    user.id,
-                    user.username,
-                    user.email,
-                    -- user.password,
-                    user.age,
-                    user.weight,
-                    user.height,
-                    user.gender,
-                    user.basal_metabolic_rate,
-                    user.energy_expenditure,
-                    user.daily_calories,
-                    user.breakfast_dinner_calories,
-                    user.lunch_calories,
-                    user.breakfast_dinner_carbo_quantity,
-                    user.lunch_carbo_quantity,
-                    user.breakfast_dinner_prot_quantity,
-                    user.lunch_prot_quantity,
-                    user.breakfast_dinner_fat_quantity,
-                    user.lunch_fat_quantity,
-                    GROUP_CONCAT(`diet_type` SEPARATOR ", ") AS diet,
-                    goal.goal_type AS goal, 
-                    activity.activity_type AS activity
-                FROM user
-                LEFT JOIN user_choose_diet
-                ON user.id = user_choose_diet.user_id
-                LEFT JOIN diet
-                ON user_choose_diet.diet_id = diet.id
-                LEFT JOIN goal
-                ON user.goal_id = goal.id
-                LEFT JOIN activity
-                ON user.activity_id = activity.id
-                WHERE user.id = :user_id_to_find
-                GROUP BY user.id'; 
-        
-        $pdo = Database::getPDO();
-        $pdoStatement = $pdo->prepare($sql);
-
-        $pdoStatement->bindValue(
-            ':user_id_to_find',
-            $id,
-            PDO::PARAM_INT
-        );
-
-        $pdoStatement->execute();
-        $pdoStatement->setFetchMode(PDO::FETCH_CLASS, 'oFeel\\Models\\UserModel');
-
-        return $pdoStatement->fetch();
-    }
-
     public function insert()
     {
         $sql = 'INSERT INTO `user`(`username`, `email`, `password`)
@@ -317,7 +269,130 @@ class UserModel extends CoreModel
         } else {
             return false;
         }
+    }
+    
+    public function authenticate($username, $password)
+    {
+        $sql = 'SELECT
+                    user.username,
+                    user.password
+                FROM user
+                WHERE user.username = :user_to_find
+                AND user.password = :password_to_check'; 
+    
+        $pdo = Database::getPDO();
+        $pdoStatement = $pdo->prepare($sql);
+    
+        $pdoStatement->bindValue(
+            ':user_to_find',
+            $username,
+            PDO::PARAM_STR
+        );
 
+        $pdoStatement->bindValue(
+            ':password_to_check',
+            $password,
+            PDO::PARAM_STR
+        );
+    
+        $pdoStatement->execute();
+        $pdoStatement->setFetchMode(PDO::FETCH_CLASS, 'oFeel\\Models\\UserModel');
+
+        $affectedRows = $pdoStatement->rowCount();
+        if ($affectedRows === 1) {
+            return true;
+        } else {
+            return false;
+        }
+        // return $pdoStatement->fetch();
+    }
+
+    public function catchUserInfo($username)
+    {
+        $sql = 'SELECT
+                    user.username,
+                    user.age,
+                    user.weight,
+                    user.height,
+                    user.gender,
+                    user.basal_metabolic_rate,
+                    user.energy_expenditure,
+                    user.daily_calories,
+                    user.breakfast_dinner_calories,
+                    user.lunch_calories,
+                    user.breakfast_dinner_carb_quantity,
+                    user.lunch_carb_quantity,
+                    user.breakfast_dinner_prot_quantity,
+                    user.lunch_prot_quantity,
+                    user.breakfast_dinner_fat_quantity,
+                    user.lunch_fat_quantity,
+                    GROUP_CONCAT(`diet_type` SEPARATOR ", ") AS diet,
+                    goal.goal_type AS goal,
+                    goal.carbohydrate_proportion AS carb_proportion,
+                    goal.protein_proportion AS prot_proportion,
+                    goal.fat_proportion AS fat_proportion, 
+                    activity.activity_type AS activity,
+                    activity.factor AS factor_activity
+                FROM user
+                LEFT JOIN user_choose_diet
+                ON user.id = user_choose_diet.user_id
+                LEFT JOIN diet
+                ON user_choose_diet.diet_id = diet.id
+                LEFT JOIN goal
+                ON user.goal_id = goal.id
+                LEFT JOIN activity
+                ON user.activity_id = activity.id
+                WHERE user.username = :user_to_find
+                GROUP BY user.id'; 
+        
+        $pdo = Database::getPDO();
+        $pdoStatement = $pdo->prepare($sql);
+
+        $pdoStatement->bindValue(
+            ':user_to_find',
+            $username,
+            PDO::PARAM_STR
+        );
+
+        $pdoStatement->execute();
+        $pdoStatement->setFetchMode(PDO::FETCH_CLASS, 'oFeel\\Models\\UserModel');
+
+        return $pdoStatement->fetch();
+    }
+
+    public function updatemyfeeling(){
+        $sql = 'UPDATE `user`
+                SET `gender` = :new_gender,
+                    `age` = :new_age,
+                    `height` = :new_height,
+                    `weight` = :new_weight,
+                    `activity_id` = :new_activity_id
+                    `updated_at` = CURRENT_TIMESTAMP
+                WHERE `username` = :username ;
+        ';
+
+        $pdo = Database::getPDO();
+        $pdoStatement = $pdo->prepare($sql);
+        
+        $pdoStatement->bindValue(
+            ':new_goal',
+            $this->goal_id,
+            PDO::PARAM_INT
+        );
+
+        $pdoStatement->bindValue(
+            ':username',
+            $this->username,
+            PDO::PARAM_INT
+        );
+
+        $pdoStatement->execute();
+        $affectedRows = $pdoStatement->rowCount();
+        if ($affectedRows === 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function updateGoal()
@@ -376,6 +451,8 @@ class UserModel extends CoreModel
         return [
             'id' => $this->id,
             'username' => $this->username,
+            'email' => $this->email,
+            'password' => $this->password,
             'age' => $this->age,
             'weight' => $this->weight,
             'height' => $this->height,
@@ -385,16 +462,21 @@ class UserModel extends CoreModel
             'daily_calories' => $this->daily_calories,
             'breakfast_dinner_calories' => $this->breakfast_dinner_calories,
             'lunch_calories' => $this->lunch_calories,
-            'breakfast_dinner_carbo_quantity' => $this->breakfast_dinner_carbo_quantity,
-            'lunch_carbo_quantity' => $this->lunch_carbo_quantity,
+            'breakfast_dinner_carb_quantity' => $this->breakfast_dinner_carb_quantity,
+            'lunch_carb_quantity' => $this->lunch_carb_quantity,
             'breakfast_dinner_prot_quantity' => $this->breakfast_dinner_prot_quantity,
             'lunch_prot_quantity' => $this->lunch_prot_quantity,
             'breakfast_dinner_fat_quantity' => $this->breakfast_dinner_fat_quantity,
             'lunch_fat_quantity' => $this->lunch_fat_quantity,
-            // 'activity' => $this->activity,
-            // 'diet' => $this->diet,
-            // 'goal' => $this->goal,
+            'activity' => $this->activity,
+            'diet' => $this->diet,
+            'goal' => $this->goal,
+            'factor_activity' => $this->factor_activity,
+            'carb_proportion' => $this->carb_proportion,
+            'fat_proportion' => $this->fat_proportion,
+            'prot_proportion' => $this->prot_proportion,
         ];
     }
+
 
 }

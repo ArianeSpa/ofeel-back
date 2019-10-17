@@ -86,5 +86,19 @@ class Application
              ['controller' => 'oFeel\Controllers\UserController', 'method' => 'create'],
              'create_user'
         );
+
+        $this->router->map(
+            'POST',
+             '/user/authenticate',
+             ['controller' => 'oFeel\Controllers\UserController', 'method' => 'authenticate'],
+             'authenticate_user'
+        );
+
+        $this->router->map(
+            'POST',
+             '/user/updatemyfeeling',
+             ['controller' => 'oFeel\Controllers\UserController', 'method' => 'updatemyfeeling'],
+             'updatemyfeeling'
+        );
     }
 }
