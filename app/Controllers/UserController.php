@@ -103,8 +103,6 @@ class UserController extends CoreController
         ];
 
         $this->showJson($message);    
-
-
     }
 
     public function updategoal(){
@@ -120,12 +118,46 @@ class UserController extends CoreController
         $userToUpdate->setBreakfastDinnerFatQty($_POST['breakfast_dinner_fat_quantity']);
         $userToUpdate->setLunchFatQty($_POST['lunch_fat_quantity']);
         $userToUpdate->setGoal($_POST['goal']);
+        // $userToUpdate->setLactoseFree($_POST['lactose_free']);
+        // $userToUpdate->setVegan($_POST['vegan']);
 
 
-        $result = $userToUpdate->updategoalprofil();
+
+
+        $resultgoal = $userToUpdate->updategoalprofil();
+        $resultreset = $userToUpdate->resetDietProfil();
+
+   
+        if ($_POST['lactose_free'] !== "0"){
+            $userToUpdate->setDiet($_POST['lactose_free']);
+            $testL = $userToUpdate->updateDietProfil();
+
+        } else {
+            $testL ='false';
+        }
+        if ($_POST['gluten_free'] !== "0"){
+            $userToUpdate->setDiet($_POST['gluten_free']);
+
+            $testG = $userToUpdate->updateDietProfil();
+
+        } else {
+            $testG ='false';
+        }
+        if ($_POST['vegan'] !== "0"){
+            $userToUpdate->setDiet($_POST['vegan']);
+
+            $testV = $userToUpdate->updateDietProfil();
+
+        } else {
+            $testV ='false';
+        }
 
         $message [] = [
-            'response' => $result,
+            'goal' => $resultgoal,  
+            'reset' => $resultreset,
+            'lactosefree' => $testL,
+            'glutenfree' => $testG,
+            'vegan' => $testV,
         ];
 
         $this->showJson($message);    

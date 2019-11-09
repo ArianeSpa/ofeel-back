@@ -28,6 +28,9 @@ class UserModel extends CoreModel
     protected $activity_id;
     protected $goal_id;
     protected $diet;
+    protected $vegan;
+    protected $gluten_free;
+    protected $lactose_free;
     protected $activity;
     protected $factor_activity;
     protected $goal;
@@ -36,8 +39,37 @@ class UserModel extends CoreModel
     protected $prot_proportion;
 
 
+    //Getters and setters
+    public function getVegan()
+    {
+        return $this->vegan;
+    }
 
-    //Getters and setters TODO
+    public function setVegant($value)
+    {
+        $this->vegan = $value;
+    }
+
+    public function getGlutenFree()
+    {
+        return $this->gluten_free;
+    }
+    
+    public function setGlutenFree($value)
+    {
+        $this->gluten_free = $value;
+    }
+    
+    public function getLactoseFree()
+    {
+        return $this->lactose_free;
+    }
+    
+    public function setLactoseFree($value)
+    {
+        $this->lactose_free = $value;
+    }
+
     public function getUsername()
     {
         return $this->username;
@@ -257,6 +289,17 @@ class UserModel extends CoreModel
         $this->goal = $value;
     }
 
+    public function getDiet()
+    {
+        return $this->diet;
+    }
+
+    public function setDiet($value)
+    {
+        $this->diet = $value;
+    }
+    
+
     public function insert()
     {
         $sql = 'INSERT INTO `user`(`username`, `email`, `password`)
@@ -433,9 +476,7 @@ class UserModel extends CoreModel
         );
 
         $pdoStatement->execute();
-        // $pdoStatement->setFetchMode(PDO::FETCH_CLASS, 'oFeel\\Models\\UserModel');
 
-        // return $pdoStatement->fetch();
         $affectedRows = $pdoStatement->rowCount();
         if ($affectedRows === 1) {
             return true;
@@ -530,11 +571,69 @@ class UserModel extends CoreModel
             $this->goal,
             PDO::PARAM_STR
         );
+        $pdoStatement->execute();
+
+        $affectedRows = $pdoStatement->rowCount();
+        if ($affectedRows === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function resetDietProfil(){
+        $sql = 'DELETE FROM user_choose_diet
+                WHERE user_id IN
+                (
+                    SELECT user.id
+                    FROM user
+                    WHERE user.username = :username
+                );
+        ';
+
+        $pdo = Database::getPDO();
+        $pdoStatement = $pdo->prepare($sql);
+        
+        $pdoStatement->bindValue(
+            ':username',
+            $this->username,
+            PDO::PARAM_STR
+        );
 
         $pdoStatement->execute();
-        // $pdoStatement->setFetchMode(PDO::FETCH_CLASS, 'oFeel\\Models\\UserModel');
 
-        // return $pdoStatement->fetch();
+        $affectedRows = $pdoStatement->rowCount();
+        if ($affectedRows === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateDietProfil(){
+        $sql = 'INSERT INTO user_choose_diet (user_id, diet_id)
+                    SELECT user.id, diet.id
+                    FROM user, diet
+                    WHERE user.username = :username AND diet.diet_type = :diet;
+        ';
+
+        $pdo = Database::getPDO();
+        $pdoStatement = $pdo->prepare($sql);
+       
+        $pdoStatement->bindValue(
+            ':username',
+            $this->username,
+            PDO::PARAM_STR
+        );
+
+        $pdoStatement->bindValue(
+            ':diet',
+            $this->diet,
+            PDO::PARAM_STR
+        );
+
+        $pdoStatement->execute();
+
         $affectedRows = $pdoStatement->rowCount();
         if ($affectedRows === 1) {
             return true;

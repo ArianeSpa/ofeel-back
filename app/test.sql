@@ -29,3 +29,17 @@ UPDATE user, activity
 SET user.activity_id=activity.id
 WHERE activity.activity_type LIKE 'Actif'
 AND user.username ='ariane';
+
+
+
+DELETE FROM user_choose_diet
+WHERE user_id IN
+(
+    SELECT user.id
+    FROM user
+    WHERE user.username = 'ariane'
+);
+INSERT INTO user_choose_diet (user_id, diet_id)
+    SELECT user.id, diet.id
+    FROM user, diet
+    WHERE user.username = 'ariane' AND diet.diet_type = 'Vegan';
