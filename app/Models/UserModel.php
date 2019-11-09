@@ -209,12 +209,12 @@ class UserModel extends CoreModel
 
     public function getLunchFatQty()
     {
-        return $this->lunch_prot_quantity;
+        return $this->lunch_fat_quantity;
     }
 
     public function setLunchFatQty($value)
     {
-        $this->lunch_prot_quantity = $value;
+        $this->lunch_fat_quantity = $value;
     }
 
     public function getActivityId()
@@ -245,6 +245,16 @@ class UserModel extends CoreModel
     public function setGoalId($value)
     {
         $this->goal_id = $value;
+    }
+
+    public function getGoal()
+    {
+        return $this->goal;
+    }
+
+    public function setGoal($value)
+    {
+        $this->goal = $value;
     }
 
     public function insert()
@@ -434,30 +444,97 @@ class UserModel extends CoreModel
         }
     }
 
-    public function updateGoal()
+    public function updategoalprofil()
     {
-        $sql = 'UPDATE `user`
-                SET `goal_id` = :new_goal,
-                    `updated_at` = CURRENT_TIMESTAMP
-                WHERE `id` = :id ;
+        $sql = 'UPDATE user, goal
+                SET user.daily_calories = :daily_calories,
+                    user.breakfast_dinner_calories = :breakfast_dinner_calories,
+                    user.lunch_calories = :lunch_calories,
+                    user.breakfast_dinner_carb_quantity = :breakfast_dinner_carb_quantity,
+                    user.lunch_carb_quantity = :lunch_carb_quantity,
+                    user.breakfast_dinner_prot_quantity = :breakfast_dinner_prot_quantity,
+                    user.lunch_prot_quantity = :lunch_prot_quantity,
+                    user.breakfast_dinner_fat_quantity = :breakfast_dinner_fat_quantity,
+                    user.lunch_fat_quantity = :lunch_fat_quantity,
+                    user.updated_at = CURRENT_TIMESTAMP,
+                    user.goal_id = goal.id
+                WHERE user.username = :username
+                AND goal.goal_type = :goal;
         ';
 
         $pdo = Database::getPDO();
         $pdoStatement = $pdo->prepare($sql);
         
         $pdoStatement->bindValue(
-            ':new_goal',
-            $this->goal_id,
+            ':username',
+            $this->username,
+            PDO::PARAM_STR
+        );
+
+        $pdoStatement->bindValue(
+            ':daily_calories',
+            $this->daily_calories,
+            PDO::PARAM_STR
+        );
+        
+        $pdoStatement->bindValue(
+            ':breakfast_dinner_calories',
+            $this->breakfast_dinner_calories,
+            PDO::PARAM_INT
+        );
+        
+        $pdoStatement->bindValue(
+            ':lunch_calories',
+            $this->lunch_calories,
             PDO::PARAM_INT
         );
 
         $pdoStatement->bindValue(
-            ':id',
-            $this->id,
+            ':breakfast_dinner_carb_quantity',
+            $this->breakfast_dinner_carb_quantity,
             PDO::PARAM_INT
         );
 
+        $pdoStatement->bindValue(
+            ':lunch_carb_quantity',
+            $this->lunch_carb_quantity,
+            PDO::PARAM_INT
+        );
+
+        $pdoStatement->bindValue(
+            ':breakfast_dinner_prot_quantity',
+            $this->breakfast_dinner_prot_quantity,
+            PDO::PARAM_INT
+        );
+
+        $pdoStatement->bindValue(
+            ':lunch_prot_quantity',
+            $this->lunch_prot_quantity,
+            PDO::PARAM_INT
+        );
+
+        $pdoStatement->bindValue(
+            ':breakfast_dinner_fat_quantity',
+            $this->breakfast_dinner_fat_quantity,
+            PDO::PARAM_INT
+        );
+
+        $pdoStatement->bindValue(
+            ':lunch_fat_quantity',
+            $this->lunch_fat_quantity,
+            PDO::PARAM_INT
+        );
+
+        $pdoStatement->bindValue(
+            ':goal',
+            $this->goal,
+            PDO::PARAM_STR
+        );
+
         $pdoStatement->execute();
+        // $pdoStatement->setFetchMode(PDO::FETCH_CLASS, 'oFeel\\Models\\UserModel');
+
+        // return $pdoStatement->fetch();
         $affectedRows = $pdoStatement->rowCount();
         if ($affectedRows === 1) {
             return true;

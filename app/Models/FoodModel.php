@@ -13,7 +13,7 @@ class FoodModel extends CoreModel
 
     protected $food_name;
     protected $food_energy;
-    protected $food_carbo;
+    protected $food_carb;
     protected $food_fat;
     protected $food_prot;
     protected $food_category;
@@ -32,7 +32,7 @@ class FoodModel extends CoreModel
 
     public function getFoodCarbo()
     {
-        return $this->food_carbo;
+        return $this->food_carb;
     }
 
     public function getFoodFat()
@@ -66,7 +66,7 @@ class FoodModel extends CoreModel
                     food.id,
                     food_name,
                     food_energy,
-                    food_carbo,
+                    food_carb,
                     food_fat,
                     food_prot,
                     food_category,
@@ -94,7 +94,7 @@ class FoodModel extends CoreModel
             'diet' => $this->diet,
             'name' => $this->food_name,
             'energy' => $this->food_energy,
-            'carbo' => $this->food_carbo,
+            'carb' => $this->food_carb,
             'fat' => $this->food_fat,
             'prot' => $this->food_prot,
             'category' => $this->food_category,
