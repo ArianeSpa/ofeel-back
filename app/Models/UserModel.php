@@ -50,7 +50,7 @@ class UserModel extends CoreModel
 
     public function getEmail()
     {
-        return $this->username;
+        return $this->email;
     }
 
     public function setEmail($value)
@@ -60,7 +60,7 @@ class UserModel extends CoreModel
 
     public function getPassword()
     {
-        return $this->username;
+        return $this->password;
     }
 
     public function setPassword($value)
@@ -227,6 +227,16 @@ class UserModel extends CoreModel
         $this->activity_id = $value;
     }
 
+    public function getActivity()
+    {
+        return $this->activity;
+    }
+
+    public function setActivity($value)
+    {
+        $this->activity = $value;
+    }
+
     public function getGoalId()
     {
         return $this->goal_id;
@@ -271,14 +281,13 @@ class UserModel extends CoreModel
         }
     }
     
-    public function authenticate($username, $password)
+    public function tryAuth($username)
     {
         $sql = 'SELECT
                     user.username,
                     user.password
                 FROM user
-                WHERE user.username = :user_to_find
-                AND user.password = :password_to_check'; 
+                WHERE user.username = :user_to_find'; 
     
         $pdo = Database::getPDO();
         $pdoStatement = $pdo->prepare($sql);
@@ -288,23 +297,11 @@ class UserModel extends CoreModel
             $username,
             PDO::PARAM_STR
         );
-
-        $pdoStatement->bindValue(
-            ':password_to_check',
-            $password,
-            PDO::PARAM_STR
-        );
     
         $pdoStatement->execute();
         $pdoStatement->setFetchMode(PDO::FETCH_CLASS, 'oFeel\\Models\\UserModel');
 
-        $affectedRows = $pdoStatement->rowCount();
-        if ($affectedRows === 1) {
-            return true;
-        } else {
-            return false;
-        }
-        // return $pdoStatement->fetch();
+        return $pdoStatement->fetch();
     }
 
     public function catchUserInfo($username)
@@ -360,33 +357,75 @@ class UserModel extends CoreModel
         return $pdoStatement->fetch();
     }
 
-    public function updatemyfeeling(){
-        $sql = 'UPDATE `user`
-                SET `gender` = :new_gender,
-                    `age` = :new_age,
-                    `height` = :new_height,
-                    `weight` = :new_weight,
-                    `activity_id` = :new_activity_id
-                    `updated_at` = CURRENT_TIMESTAMP
-                WHERE `username` = :username ;
+    public function updatemyfeelingprofil(){
+        $sql = 'UPDATE user, activity
+                SET user.gender = :gender,
+                    user.age = :age,
+                    user.height = :height,
+                    user.weight = :new_weight,
+                    user.basal_metabolic_rate = :basal_metabolic_rate,
+                    user.energy_expenditure = :energy_expenditure,
+                    user.updated_at = CURRENT_TIMESTAMP,
+                    user.activity_id = activity.id
+                WHERE user.username = :username
+                AND activity.activity_type = :activity;
         ';
 
         $pdo = Database::getPDO();
         $pdoStatement = $pdo->prepare($sql);
         
         $pdoStatement->bindValue(
-            ':new_goal',
-            $this->goal_id,
+            ':username',
+            $this->username,
+            PDO::PARAM_STR
+        );
+
+        $pdoStatement->bindValue(
+            ':gender',
+            $this->gender,
+            PDO::PARAM_STR
+        );
+        
+        $pdoStatement->bindValue(
+            ':age',
+            $this->age,
+            PDO::PARAM_INT
+        );
+        
+        $pdoStatement->bindValue(
+            ':height',
+            $this->height,
             PDO::PARAM_INT
         );
 
         $pdoStatement->bindValue(
-            ':username',
-            $this->username,
+            ':new_weight',
+            $this->weight,
             PDO::PARAM_INT
         );
 
+        $pdoStatement->bindValue(
+            ':basal_metabolic_rate',
+            $this->basal_metabolic_rate,
+            PDO::PARAM_INT
+        );
+
+        $pdoStatement->bindValue(
+            ':energy_expenditure',
+            $this->energy_expenditure,
+            PDO::PARAM_INT
+        );
+
+        $pdoStatement->bindValue(
+            ':activity',
+            $this->activity,
+            PDO::PARAM_STR
+        );
+
         $pdoStatement->execute();
+        // $pdoStatement->setFetchMode(PDO::FETCH_CLASS, 'oFeel\\Models\\UserModel');
+
+        // return $pdoStatement->fetch();
         $affectedRows = $pdoStatement->rowCount();
         if ($affectedRows === 1) {
             return true;
@@ -449,10 +488,7 @@ class UserModel extends CoreModel
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
             'username' => $this->username,
-            'email' => $this->email,
-            'password' => $this->password,
             'age' => $this->age,
             'weight' => $this->weight,
             'height' => $this->height,
