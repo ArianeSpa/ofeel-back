@@ -100,5 +100,12 @@ class Application
              ['controller' => 'oFeel\Controllers\UserController', 'method' => 'updatemyfeeling'],
              'updatemyfeeling'
         );
+
+        $this->router->map(
+            'POST',
+             '/user/updategoal',
+             ['controller' => 'oFeel\Controllers\UserController', 'method' => 'updategoal'],
+             'updategoal'
+        );
     }
 }

@@ -106,6 +106,32 @@ class UserController extends CoreController
 
 
     }
+
+    public function updategoal(){
+        $userToUpdate = new UserModel;
+        $userToUpdate->setUsername($_POST['username']);
+        $userToUpdate->setDailyCal($_POST['daily_calories']);
+        $userToUpdate->setBreakfastDinnerCal($_POST['breakfast_dinner_calories']);
+        $userToUpdate->setLunchCal($_POST['lunch_calories']);
+        $userToUpdate->setBreakfastDinnercarbQty($_POST['breakfast_dinner_carb_quantity']);
+        $userToUpdate->setLunchcarbQty($_POST['lunch_carb_quantity']);
+        $userToUpdate->setBreakfastDinnerProtQty($_POST['breakfast_dinner_prot_quantity']);
+        $userToUpdate->setLunchProtQty($_POST['lunch_prot_quantity']);
+        $userToUpdate->setBreakfastDinnerFatQty($_POST['breakfast_dinner_fat_quantity']);
+        $userToUpdate->setLunchFatQty($_POST['lunch_fat_quantity']);
+        $userToUpdate->setGoal($_POST['goal']);
+
+
+        $result = $userToUpdate->updategoalprofil();
+
+        $message [] = [
+            'response' => $result,
+        ];
+
+        $this->showJson($message);    
+
+
+    }
 } 
 
 
