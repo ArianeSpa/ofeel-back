@@ -6,7 +6,6 @@
 | `/diet` | GET | - | Récupération des données des régimes alimentaires |
 | `/goal` | GET | - | Récupération des données des objectifs |
 | `/activity` | GET | - | Récupération des données des activités |
-<!-- | `/user` | GET | - | Récupération des données des utilisateurs | -->
 | `/user/add` | POST | username, email, password | Ajouter un nouvel utilisateur |
 | `/user/[id]` | GET | - | Récupération des données de l'utilisateur dont l'id est fourni |
 | `/user/[id]/update` | POST | goal, activity, diet, ... | Modification des données de l'utilisateur dont l'id est fourni |
